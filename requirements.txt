@@ -1,3 +1,5 @@
+torch
+
 dominate
 packaging
 opencv-python
