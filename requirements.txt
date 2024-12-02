@@ -1,0 +1,6 @@
+dominate
+packaging
+opencv-python
+GPUtil
+
+gradio
