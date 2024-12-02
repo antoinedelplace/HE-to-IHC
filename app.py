@@ -87,4 +87,4 @@ if __name__ == "__main__":
     args = parse_args(main)
     main(**vars(args))
 
-# python main.py -i ../../data/BCI_dataset/BCI_dataset/HE/test/00003_test_3+.png
+# python app.py
