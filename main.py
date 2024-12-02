@@ -21,7 +21,7 @@ def convert_he2ihc(input_he_image_path):
     input_img = Image.open(input_he_image_path).convert('RGB')
 
     opt = SimpleNamespace(
-        gpu_ids=[0],
+        gpu_ids=None,
         isTrain=False,
         checkpoints_dir="../../checkpoints",
         # name="ASP_pretrained/BCI_her2_lambda_linear",

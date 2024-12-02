@@ -205,7 +205,7 @@ def init_net(net, init_type='normal', init_gain=0.02, gpu_ids=[], debug=False, i
 
     Return an initialized network.
     """
-    if len(gpu_ids) > 0:
+    if gpu_ids is not None and len(gpu_ids) > 0:
         assert(torch.cuda.is_available())
         net.to(gpu_ids[0])
         # if not amp:
