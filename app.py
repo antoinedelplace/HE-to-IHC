@@ -1,3 +1,5 @@
+import os
+
 import gradio as gr
 import numpy as np
 
@@ -11,6 +13,7 @@ from PIL import Image
 from asp.models.cpt_model import CPTModel
 from asp.data.base_dataset import get_transform
 from asp.util.general_utils import parse_args
+from asp.util.io_utils import download_weights
 
 def transform_with_seed(input_img, transform, seed=123456):
     random.seed(seed)
@@ -74,6 +77,8 @@ def convert_he2ihc(input_he_image_path):
     return output_img
 
 def main():
+    download_weights("1SMTeMprETgXAfJGXQz0LtgXXetfKXNaW", "../../checkpoints/ASP_pretrained/BCI_her2_zero_uniform/latest_net_G.pth")
+
     demo = gr.Interface(
         fn=convert_he2ihc,
         inputs=gr.Image(type="filepath"),
