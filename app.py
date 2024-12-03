@@ -22,6 +22,7 @@ def transform_with_seed(input_img, transform, seed=123456):
 
 def convert_he2ihc(input_he_image_path):
     input_img = Image.open(input_he_image_path).convert('RGB')
+    original_img_size = input_img.size
 
     opt = SimpleNamespace(
         gpu_ids=None,
@@ -29,7 +30,7 @@ def convert_he2ihc(input_he_image_path):
         checkpoints_dir="../../checkpoints",
         # name="ASP_pretrained/BCI_her2_lambda_linear",
         name="ASP_pretrained/BCI_her2_zero_uniform",
-        preprocess="crop",
+        preprocess="scale_width_and_crop",
         nce_layers="0,4,8,12,16",
         nce_idt=False,
         input_nc=3,
@@ -72,6 +73,7 @@ def convert_he2ihc(input_he_image_path):
     visuals = model.get_current_visuals()
 
     output_img = to_pil_image(visuals['fake_B'].detach().cpu().squeeze(0))
+    output_img = output_img.resize(original_img_size)
     print("np.shape(output_img)", np.shape(output_img))
 
     return output_img
