@@ -15,6 +15,7 @@ Gradio App based on Adaptive Supervised PatchNCE Loss for Learning H&E-to-IHC St
 Online demo: [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/AntoineDelplace/HE-to-IHC)
 
 Original folder: [lifangda01/AdaptiveSupervisedPatchNCE](https://github.com/lifangda01/AdaptiveSupervisedPatchNCE)
+
 Original paper: [![arXiv](https://img.shields.io/badge/arXiv-2303.06193-00ff00.svg)](https://arxiv.org/pdf/2303.06193)
 
 ## 🎯 Overview
@@ -27,3 +28,9 @@ Users can generate virtual IHC stains for four key biomarkers critical to breast
 - PR: Progesterone Receptor
 
 This tool simplifies and accelerates the analysis of histopathological samples, making advanced diagnostic insights more accessible through virtual staining technology.
+
+Input H&E Image             |  Output IHC Image (Ki67)
+:-------------------------:|:-------------------------:
+![](https://github.com/user-attachments/assets/967ad17a-d9ba-4ddf-91c0-174ecd0c45b1)  |  ![](https://github.com/user-attachments/assets/999c0d2d-d029-4c9c-8123-73ed125a086c)
+
+
