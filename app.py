@@ -36,7 +36,14 @@ def postprocess_tensor(tensor):
 
     return output_img
 
-def convert_he2ihc(input_he_image_path):
+def convert_he2ihc(output_stain, input_he_image_path):
+    stain2folder_name = {
+        "HER2 (Human Epidermal growth factor Receptor 2)": "ASP_pretrained/MIST_her2_lambda_linear",
+        "ER (Estrogen Receptor)"                         : "ASP_pretrained/MIST_er_lambda_linear",
+        "Ki67 (Antigen KI-67)"                           : "ASP_pretrained/MIST_ki67_lambda_linear",
+        "PR (Progesterone Receptor)"                     : "ASP_pretrained/MIST_pr_lambda_linear",
+    }
+
     input_img = Image.open(input_he_image_path).convert('RGB')
     original_img_size = input_img.size
 
@@ -44,10 +51,7 @@ def convert_he2ihc(input_he_image_path):
         gpu_ids=None,
         isTrain=False,
         checkpoints_dir="../../checkpoints",
-        name="ASP_pretrained/MIST_her2_lambda_linear",
-        # name="ASP_pretrained/MIST_her2_zero_uniform",
-        # name="ASP_pretrained/BCI_her2_lambda_linear",
-        # name="ASP_pretrained/BCI_her2_zero_uniform",
+        name=stain2folder_name[output_stain],
         preprocess="scale_width_and_crop",
         nce_layers="0,4,8,12,16",
         nce_idt=False,
@@ -98,16 +102,27 @@ def convert_he2ihc(input_he_image_path):
     return output_img
 
 def main():
-    # download_weights("1SMTeMprETgXAfJGXQz0LtgXXetfKXNaW", "../../checkpoints/ASP_pretrained/BCI_her2_zero_uniform/latest_net_G.pth")
-    # download_weights("1PBVAwwytks9FVUEt6k4Ra3vgTB8moFTY", "../../checkpoints/ASP_pretrained/BCI_her2_lambda_linear/latest_net_G.pth")
-    # download_weights("1m75d7dvVs_I8-c5zWKgOBz0dIMz1qdc2", "../../checkpoints/ASP_pretrained/MIST_her2_zero_uniform/latest_net_G.pth")
     download_weights("1N_HOGU7FO4u-S1OD-bumZGyevYeucT4Q", "../../checkpoints/ASP_pretrained/MIST_her2_lambda_linear/latest_net_G.pth")
+    download_weights("1j6xu8MAOVUaZuV4O5CqsBfMtH6-droys", "../../checkpoints/ASP_pretrained/MIST_er_lambda_linear/latest_net_G.pth")
+    download_weights("10STHMS-GMkHMOJp_cJ44T66rRwKlUZyr", "../../checkpoints/ASP_pretrained/MIST_ki67_lambda_linear/latest_net_G.pth")
+    download_weights("1APIrm3kqtPhhAIcU7pvfIcYpMjpsIlQ9", "../../checkpoints/ASP_pretrained/MIST_pr_lambda_linear/latest_net_G.pth")
     
     demo = gr.Interface(
         fn=convert_he2ihc,
-        inputs=gr.Image(type="filepath"),
-        outputs=gr.Image(),
-        title="H&E to IHC, BIC HER2"
+        inputs=[
+            gr.Dropdown(
+                choices=["HER2 (Human Epidermal growth factor Receptor 2)", 
+                 "ER (Estrogen Receptor)", 
+                 "Ki67 (Antigen KI-67)", 
+                 "PR (Progesterone Receptor)"], 
+                label="Output Stain"
+            ),
+            gr.Image(type="filepath", label="Input H&E Image")
+        ],
+        outputs=gr.Image(label="Ouput IHC Image"),
+        title="H&E-to-IHC Stain Translation",
+        description="<h2>Stain your H&E (Hematoxylin and Eosin) images into IHC (ImmunoHistoChemistry) images automatically thanks to AI!</h2>",
+        theme="ParityError/Interstellar"
     )
 
     demo.launch()
