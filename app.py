@@ -128,7 +128,7 @@ def main():
 
         gr.Examples(
             examples=[
-                ["assets/he.jpg", "assets/ihc.png"],
+                ["assets/he.jpg", "assets/ihc.jpg"],
             ],
             inputs=[input_img, output_img],
             examples_per_page=1
