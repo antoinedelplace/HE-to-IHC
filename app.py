@@ -122,6 +122,16 @@ def main():
         outputs=gr.Image(label="Ouput IHC Image"),
         title="H&E-to-IHC Stain Translation",
         description="<h2>Stain your H&E (Hematoxylin and Eosin) images into IHC (ImmunoHistoChemistry) images automatically thanks to AI!</h2>",
+        article=
+        """
+
+        # Example
+
+        
+        Input H&E Image             |  Output IHC Image (Ki67)
+        :-------------------------:|:-------------------------:
+        ![](https://github.com/user-attachments/assets/967ad17a-d9ba-4ddf-91c0-174ecd0c45b1)  |  ![](https://github.com/user-attachments/assets/999c0d2d-d029-4c9c-8123-73ed125a086c)
+        """,
         theme="ParityError/Interstellar"
     )
 
