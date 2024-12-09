@@ -107,33 +107,33 @@ def main():
     download_weights("10STHMS-GMkHMOJp_cJ44T66rRwKlUZyr", "../../checkpoints/ASP_pretrained/MIST_ki67_lambda_linear/latest_net_G.pth")
     download_weights("1APIrm3kqtPhhAIcU7pvfIcYpMjpsIlQ9", "../../checkpoints/ASP_pretrained/MIST_pr_lambda_linear/latest_net_G.pth")
     
-    demo = gr.Interface(
-        fn=convert_he2ihc,
-        inputs=[
-            gr.Dropdown(
-                choices=["HER2 (Human Epidermal growth factor Receptor 2)", 
-                 "ER (Estrogen Receptor)", 
-                 "Ki67 (Antigen KI-67)", 
-                 "PR (Progesterone Receptor)"], 
-                label="Output Stain"
-            ),
-            gr.Image(type="filepath", label="Input H&E Image")
-        ],
-        outputs=gr.Image(label="Ouput IHC Image"),
-        title="H&E-to-IHC Stain Translation",
-        description="<h2>Stain your H&E (Hematoxylin and Eosin) images into IHC (ImmunoHistoChemistry) images automatically thanks to AI!</h2>",
-        article=
-        """
+    with gr.Blocks() as demo:
+        dropdown = gr.Dropdown(
+                    choices=["HER2 (Human Epidermal growth factor Receptor 2)", 
+                    "ER (Estrogen Receptor)", 
+                    "Ki67 (Antigen KI-67)", 
+                    "PR (Progesterone Receptor)"], 
+                    label="Output Stain"
+                )
+        input_img = gr.Image(type="filepath", label="Input H&E Image")
+        output_img = gr.Image(label="Output IHC Image")
+        gr.Interface(
+            fn=convert_he2ihc,
+            inputs=[dropdown, input_img],
+            outputs=output_img,
+            title="H&E-to-IHC Stain Translation",
+            description="<h2>Stain your H&E (Hematoxylin and Eosin) images into IHC (ImmunoHistoChemistry) images automatically thanks to AI!</h2>",
+            theme="ParityError/Interstellar"
+        )
 
-        # Example
+        gr.Examples(
+            examples=[
+                ["assets/he.jpg", "assets/ihc.png"],
+            ],
+            inputs=[input_img, output_img],
+            examples_per_page=1
+        )
 
-        
-        Input H&E Image             |  Output IHC Image (Ki67)
-        :-------------------------:|:-------------------------:
-        ![](https://github.com/user-attachments/assets/967ad17a-d9ba-4ddf-91c0-174ecd0c45b1)  |  ![](https://github.com/user-attachments/assets/999c0d2d-d029-4c9c-8123-73ed125a086c)
-        """,
-        theme="ParityError/Interstellar"
-    )
 
     demo.launch()
 
